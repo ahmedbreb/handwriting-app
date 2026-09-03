@@ -50,6 +50,7 @@
       font-weight: bold;
       letter-spacing: 0.5px;
       cursor: pointer;
+      touch-action: manipulation;
     }
     .clear-btn:active {
       background-color: #991b1b;
@@ -111,9 +112,15 @@
     canvas.addEventListener('pointerup', stopDrawing);
     canvas.addEventListener('pointercancel', stopDrawing);
 
-    clearBtn.addEventListener('click', () => {
+    function clearCanvas(e) {
+      if (e) e.preventDefault();
+      isDrawing = false;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
+      ctx.beginPath();
+    }
+
+    clearBtn.addEventListener('pointerdown', clearCanvas);
+    clearBtn.addEventListener('click', clearCanvas);
   </script>
 </body>
 </html>
