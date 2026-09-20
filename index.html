@@ -17,9 +17,40 @@
       height: 100%;
       overflow: hidden;
       background-color: #09090b;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .app-container {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+    .left-strip {
+      width: 42px;
+      height: 100%;
+      background-color: #dc2626;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      touch-action: manipulation;
+      flex-shrink: 0;
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      border-right: 1px solid #09090b;
+    }
+    .left-strip:active {
+      background-color: #991b1b;
+    }
+    .main-content {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      font-family: system-ui, -apple-system, sans-serif;
+      height: 100%;
+      overflow: hidden;
     }
     canvas {
       flex: 1;
@@ -60,16 +91,22 @@
 </head>
 <body>
 
-  <canvas id="canvas"></canvas>
+  <div class="app-container">
+    <div class="left-strip" id="leftClearBtn">CLEAR</div>
+    <div class="main-content">
+      <canvas id="canvas"></canvas>
 
-  <div class="bottom-strip">
-    <button class="clear-btn" id="clearBtn">Start Over / Clear</button>
+      <div class="bottom-strip">
+        <button class="clear-btn" id="bottomClearBtn">Start Over / Clear</button>
+      </div>
+    </div>
   </div>
 
   <script>
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-    const clearBtn = document.getElementById('clearBtn');
+    const bottomClearBtn = document.getElementById('bottomClearBtn');
+    const leftClearBtn = document.getElementById('leftClearBtn');
 
     function resizeCanvas() {
       const rect = canvas.getBoundingClientRect();
@@ -119,8 +156,11 @@
       ctx.beginPath();
     }
 
-    clearBtn.addEventListener('pointerdown', clearCanvas);
-    clearBtn.addEventListener('click', clearCanvas);
+    // Attach immediate single-tap clear handler to both buttons
+    [bottomClearBtn, leftClearBtn].forEach(btn => {
+      btn.addEventListener('pointerdown', clearCanvas);
+      btn.addEventListener('click', clearCanvas);
+    });
   </script>
 </body>
 </html>
