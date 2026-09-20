@@ -24,7 +24,14 @@
       width: 100%;
       height: 100%;
     }
-    .left-strip {
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+    }
+    .right-strip {
       width: 42px;
       height: 100%;
       background-color: #dc2626;
@@ -39,18 +46,10 @@
       font-size: 0.85rem;
       letter-spacing: 2px;
       writing-mode: vertical-rl;
-      transform: rotate(180deg);
-      border-right: 1px solid #09090b;
+      border-left: 1px solid #09090b;
     }
-    .left-strip:active {
+    .right-strip:active {
       background-color: #991b1b;
-    }
-    .main-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      overflow: hidden;
     }
     canvas {
       flex: 1;
@@ -92,7 +91,6 @@
 <body>
 
   <div class="app-container">
-    <div class="left-strip" id="leftClearBtn">CLEAR</div>
     <div class="main-content">
       <canvas id="canvas"></canvas>
 
@@ -100,13 +98,15 @@
         <button class="clear-btn" id="bottomClearBtn">Start Over / Clear</button>
       </div>
     </div>
+    
+    <div class="right-strip" id="rightClearBtn">CLEAR</div>
   </div>
 
   <script>
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     const bottomClearBtn = document.getElementById('bottomClearBtn');
-    const leftClearBtn = document.getElementById('leftClearBtn');
+    const rightClearBtn = document.getElementById('rightClearBtn');
 
     function resizeCanvas() {
       const rect = canvas.getBoundingClientRect();
@@ -156,8 +156,7 @@
       ctx.beginPath();
     }
 
-    // Attach immediate single-tap clear handler to both buttons
-    [bottomClearBtn, leftClearBtn].forEach(btn => {
+    [bottomClearBtn, rightClearBtn].forEach(btn => {
       btn.addEventListener('pointerdown', clearCanvas);
       btn.addEventListener('click', clearCanvas);
     });
